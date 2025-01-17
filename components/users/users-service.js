@@ -3,7 +3,11 @@ const usersModel = require('./users-model');
 
 class usersService {
     async add(name, score) {
-        await usersModel.create({ name, score });
+        await usersModel.findOneAndUpdate(
+            { name }, // Условие поиска
+            { score }, // Данные для обновления
+            { upsert: true } // Опции: upsert - создать, если не найдено; new - вернуть обновлённый документ
+        );
         return true;
     }
 
