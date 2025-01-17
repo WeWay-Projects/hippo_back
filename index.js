@@ -11,7 +11,7 @@ const app = express()
 
 app.use(cors({
     credentials: true,
-    origin: ['https://hippocto.meme', 'https://www.hippocto.meme', 'https://1jfqnl4w-5173.euw.devtunnels.ms']
+    origin: ['https://hippocto.meme', 'https://www.hippocto.meme', 'http://localhost:5174', 'https://1jfqnl4w-5173.euw.devtunnels.ms']
 }));
 app.use(express.json());
 app.use(cookieParser());
