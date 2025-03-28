@@ -11,12 +11,14 @@ const app = express()
 
 app.use(cors({
     credentials: true,
-    origin: ['https://hippocto.meme', 'https://www.hippocto.meme', 'http://localhost:5174', 'https://1jfqnl4w-5173.euw.devtunnels.ms']
+    origin: ['*']
 }));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/user', userRouter);
-
+app.use('/', (req, res) => {
+    res.send('Hello')
+});
 
 const start = async () => {
     try {
