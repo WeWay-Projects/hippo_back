@@ -1,0 +1,77 @@
+version: "3.9"
+
+services:
+  app_back:
+    image: $IMAGE_ENV_TAG
+    networks:
+      # - db
+      # - internal
+      - web
+      # - internal_net
+    deploy:
+      #   replicas: 1
+      #   placement:
+      #     constraints:
+      #       - node.labels.role == master
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.${DEPLOY_STACK_NAME}.rule=Host(`api.dblabs.app`)"
+        - "traefik.http.services.${DEPLOY_STACK_NAME}-service.loadBalancer.server.port=3000"
+        # - "traefik.http.routers.${DEPLOY_STACK_NAME}.middlewares=${DEPLOY_STACK_NAME}-cors"
+        # - "traefik.http.middlewares.${DEPLOY_STACK_NAME}-cors.headers.accesscontrolalloworiginlist=https://zsmm.app,http://localhost:4000"
+        # - "traefik.http.middlewares.${DEPLOY_STACK_NAME}-cors.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST,DELETE"
+        # - "traefik.http.middlewares.${DEPLOY_STACK_NAME}-cors.headers.accesscontrolallowheaders=Authorization,Content-Type"
+        # - "traefik.http.middlewares.${DEPLOY_STACK_NAME}-cors.headers.accesscontrolallowcredentials=true"
+        # - "traefik.http.middlewares.${DEPLOY_STACK_NAME}-cors.headers.addvaryheader=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "4M"
+        max-file: "3"
+        compress: "true"
+    environment:
+      - API_ONLY_MODE=false
+
+  # zero_back:
+  #   image: $IMAGE_ENV_TAG
+  #   networks:
+  #     - db
+  #     - internal
+  #     - web
+  #   deploy:
+  #     replicas: 1
+  #     placement:
+  #       constraints:
+  #         - node.role == manager
+  #     labels:
+  #       - "traefik.enable=true"
+  #       - "traefik.http.routers.${DEPLOY_STACK_NAME}.rule=Host(`testhz.redgen.net`)"
+  #       - "traefik.http.services.${DEPLOY_STACK_NAME}-service.loadBalancer.server.port=3000"
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "4M"
+  #       max-file: "3"
+  #       compress: "true"
+  #   environment:
+  #     - API_ONLY_MODE=false
+
+networks:
+  web:
+    external: true
+  # internal:
+  # db:
+  #   name: "${CI_PROJECT_NAME}-${CI_ENVIRONMENT_NAME}-db-network"
+  #   attachable: true
+  #   external: false
+  #   driver: overlay
+  # db:
+  #   external: true
+  #   name: db
+  # internal_net:
+  #   external: true
+  #   name: internal_net
+
+volumes:
+  db_data:
+  redis_data:
