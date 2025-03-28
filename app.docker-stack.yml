@@ -15,7 +15,7 @@ services:
       #       - node.labels.role == master
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.${DEPLOY_STACK_NAME}.rule=Host(`api.hippoweb.justdev.app`)"
+        - "traefik.http.routers.${DEPLOY_STACK_NAME}.rule=Host(`apihippoweb.justdev.app`)"
         - "traefik.http.services.${DEPLOY_STACK_NAME}-service.loadBalancer.server.port=3000"
         # - "traefik.http.routers.${DEPLOY_STACK_NAME}.middlewares=${DEPLOY_STACK_NAME}-cors"
         # - "traefik.http.middlewares.${DEPLOY_STACK_NAME}-cors.headers.accesscontrolalloworiginlist=https://zsmm.app,http://localhost:4000"
