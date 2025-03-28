@@ -5,7 +5,7 @@ RUN apk add --no-cache curl
 WORKDIR /src/app
 
 COPY package* ./
-COPY package.lock ./
+COPY package*.json ./
 
 RUN npm install
 COPY . .
