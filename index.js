@@ -23,9 +23,7 @@ app.use('/', (req, res) => {
 const start = async () => {
     try {
         await mongoose.connect(process.env.DB_URL)
-        app.listen(PORT, () => {
-            console.log(`Server started on PORT = ${PORT}`)
-        })
+        app.listen(PORT, '0.0.0.0')
     } catch (e) {
         console.log(e);
     }
